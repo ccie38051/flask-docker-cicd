@@ -1,0 +1,24 @@
+name: Docker CI/CD
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build_and_push:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Login to DockerHub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.ccie323 }}
+        password: ${{ secrets.dckr_pat_iu8KnoGvfjKG5qq_QxPCDHh1clk }}
+
+    - name: Build and push Docker image
+      run: |
+        docker build -t mybusiness/myapp:latest .
+        docker push mybusiness/myapp:latest
